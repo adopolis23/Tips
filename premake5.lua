@@ -13,6 +13,7 @@ project "Tips"
     files {
         "src/**.h",
         "src/**.cpp",
+        "libs/glad/src/glad.c",
 
         -- ImGui core files 
         "external/imgui/imgui.cpp",
@@ -36,6 +37,7 @@ project "Tips"
         "src",
         "libs/glad/include",
         "/usr/include",
+        "libs/glad/include",
 
         "external/imgui",
         "external/imgui/backends",

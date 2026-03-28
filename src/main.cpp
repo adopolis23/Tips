@@ -1,10 +1,61 @@
+#include <SDL2/SDL_video.h>
 #include <iostream>
+#include <chrono>
+#include "window/Window.h"
 
 
 int main(int argc, char** argv)
 {
+    int width = 800;
+    int height = 600;
 
-    std::cout << "Hello World\n";
+    bool running = true;
+
+    Window* window = new Window("Tips Blade Clearance Simulation", width, height, 0, SDL_WINDOWPOS_CENTERED); 
+
+
+
+
+
+
+
+    // main render loop
+    
+    int iter = 0;
+    double dt = 0.0f;
+    while (running)
+    {
+        iter++;
+        auto startTime = std::chrono::high_resolution_clock::now();
+        
+        // handle close event
+        SDL_Event event;
+        while (SDL_PollEvent(&event)) {
+            if (event.type == SDL_QUIT)
+                running = false;
+        }
+
+        // rendering scene here
+        
+
+        // // 
+
+
+        //timing and fps check
+        auto endTime = std::chrono::high_resolution_clock::now();
+        std::chrono::duration<double, std::milli> iterationTime = endTime - startTime;
+        std::chrono::duration<double, std::milli> timeInSeconds = iterationTime / 1000;
+
+        dt = iterationTime.count();
+        float fps = 1 / timeInSeconds.count();
+
+        if (iter % 200 == 0)
+        {
+            printf("%f fps\n", fps);
+        }
+
+    }
+
 
     return 0;
 }
