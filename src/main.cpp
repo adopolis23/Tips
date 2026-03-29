@@ -2,6 +2,18 @@
 #include <iostream>
 #include <chrono>
 #include "window/Window.h"
+#include "scene/Scene.h"
+#include "scene/Rotor.h"
+
+
+void InitializeSimulation(Scene* scene)
+{
+    
+   // Rotor
+   scene->AddObjectToScene(new Rotor(30, glm::vec2{0, 0})); 
+
+}
+
 
 
 int main(int argc, char** argv)
@@ -13,9 +25,8 @@ int main(int argc, char** argv)
 
     Window* window = new Window("Tips Blade Clearance Simulation", width, height, 0, SDL_WINDOWPOS_CENTERED); 
 
-
-
-
+    Scene* Simulation = new Scene();
+    InitializeSimulation(Simulation);
 
 
 

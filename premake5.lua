@@ -13,6 +13,7 @@ project "Tips"
     files {
         "src/**.h",
         "src/**.cpp",
+        "src/scene/**.cpp",
         "libs/glad/src/glad.c",
 
         -- ImGui core files 
