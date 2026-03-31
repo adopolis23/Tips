@@ -3,14 +3,16 @@
 #include <chrono>
 #include "window/Window.h"
 #include "scene/Scene.h"
+#include "scene/Camera.h"
 #include "scene/Rotor.h"
+#include "renderer/Renderer.h"
 
 
-void InitializeSimulation(Scene* scene)
+void InitializeSimulation(Scene& scene)
 {
     
    // Rotor
-   scene->AddObjectToScene(new Rotor(30, glm::vec2{0, 0})); 
+   scene.AddObjectToScene(new Rotor(30, glm::vec2{0, 0})); 
 
 }
 
@@ -24,8 +26,10 @@ int main(int argc, char** argv)
     bool running = true;
 
     Window* window = new Window("Tips Blade Clearance Simulation", width, height, 0, SDL_WINDOWPOS_CENTERED); 
+    Camera* camera = new Camera(width, height);
+    Renderer* renderer = new Renderer(camera);
 
-    Scene* Simulation = new Scene();
+    Scene Simulation;
     InitializeSimulation(Simulation);
 
 
@@ -48,6 +52,7 @@ int main(int argc, char** argv)
 
         // rendering scene here
         
+        renderer->RenderScene(Simulation);
 
         // // 
 
