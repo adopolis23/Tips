@@ -3,3 +3,10 @@ bin-int
 Makefile
 Tips.Make
 Tips
+.vs
+libs
+*.exe
+*.vcxproj
+*.filters
+*.user
+*.sln
