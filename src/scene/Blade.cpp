@@ -1,12 +1,14 @@
 #include "Blade.h"
 
 
-Blade::Blade(unsigned int length, float angle)
+Blade::Blade(unsigned int length, float angle, float offset)
 {
     this->m_length = length;
     this->m_angle = angle;
 
     this->m_width = this->m_length / this->m_ratio;
+
+    this->position.y += offset + 10;
 
     GenerateVerticies();
 

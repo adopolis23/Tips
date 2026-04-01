@@ -31,6 +31,8 @@ public:
     // creates the model from the position and the rotation
     void GenerateObjectModel();
 
+    void RotateAroundPivot(const glm::vec3& pivot, const glm::vec3& rotationDelta);
+
     // the 4 dimentional model of the object
     glm::mat4 model;
 

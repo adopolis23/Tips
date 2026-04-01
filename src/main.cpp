@@ -12,7 +12,7 @@ void InitializeSimulation(Scene& scene)
 {
     
    // Rotor
-   scene.AddObjectToScene(new Rotor(30, glm::vec2{0, 0})); 
+   scene.AddObjectToScene(new Rotor(20, glm::vec2{0, 0})); 
 
 }
 

@@ -4,16 +4,16 @@ class Blade : public Object
 {
 
 public:
-    Blade(unsigned int length, float angle);
+    Blade(unsigned int length, float angle, float offset);
 
 private:
     void GenerateVerticies();
 
-    unsigned int m_length;
-    unsigned int m_width;
+    float m_length;
+    float m_width;
     float m_angle;
 
     // ratio of blades length to its width
-    float m_ratio = 5;
+    float m_ratio = 4;
 
 };
