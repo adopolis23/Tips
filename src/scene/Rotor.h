@@ -2,6 +2,7 @@
 
 #include <vector>
 #include "Circle.h"
+#include "Blade.h"
 #include "Object.h"
 
 
@@ -18,6 +19,8 @@ private:
 
     // center of the rotor.
     Circle* m_shaft;
+
+    Blade* m_blade;
 
 
 };

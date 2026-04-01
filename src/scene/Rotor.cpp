@@ -7,6 +7,9 @@ Rotor::Rotor(int radius, glm::vec2 position)
 
     m_shaft = new Circle(30, radius, position);
 
+    m_blade = new Blade(5, 0.0f);
+
     // add the shaft to child objects
-    ChildObjects[m_shaft->objectId] = m_shaft;
+    //ChildObjects[m_shaft->objectId] = m_shaft;
+    ChildObjects[m_blade->objectId] = m_blade;
 }

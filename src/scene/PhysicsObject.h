@@ -14,4 +14,5 @@ protected:
     glm::vec3 velocity; // world units per second
     
     float radius;
+
 };

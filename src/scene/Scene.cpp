@@ -1,8 +1,8 @@
-#include "Scene.h"
+#include "scene.h"
 
 void Scene::AddObjectToScene(Object* object)
 {
-	int index = object->GetObjectId();
+	int index = object->objectId;
 	objects[index] = object;
 	objectCount++;
 }
