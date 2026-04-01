@@ -53,6 +53,7 @@ int main(int argc, char** argv)
         // rendering scene here
         
         renderer->RenderScene(Simulation);
+        window->SwapBuffers();
 
         // // 
 

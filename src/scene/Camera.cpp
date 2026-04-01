@@ -13,12 +13,12 @@ Camera::Camera(int width, int height)
 
     printf("World height: %f  World Width: %f\n", world_height, world_width);
 
-    left_world_bound = -world_width * 0.5f;
-    right_world_bound = world_width * 0.5f;
-    top_world_bound = world_height * 0.5f;
-    bottom_world_bound = -world_height * 0.5f;
+    left_window_bound = -window_width * 0.5f;
+    right_window_bound = window_width * 0.5f;
+    top_window_bound = window_height * 0.5f;
+    bottom_window_bound = -window_height * 0.5f;
 
     //using this projection means that the left wall and right wall are at +/- aspect
-    projection = glm::ortho(left_world_bound, right_world_bound, bottom_world_bound, top_world_bound);
+    projection = glm::ortho(left_window_bound, right_window_bound, bottom_window_bound, top_window_bound);
 
 }

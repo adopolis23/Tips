@@ -18,6 +18,11 @@ public:
     float top_world_bound;
     float bottom_world_bound;
 
+    float left_window_bound;
+    float right_window_bound;
+    float top_window_bound;
+    float bottom_window_bound;
+
     // width / height
     float aspect_ratio;
 
