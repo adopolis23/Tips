@@ -44,7 +44,8 @@ project "Tips"
         "external/imgui/backends",
 
         -- linux include path
-        "/usr/include/SDL2"
+        "/usr/include/SDL2",
+        "E:/dev/vcpkg/installed/x64-windows/include"
     }
 
     libdirs { "E:/dev/vcpkg/installed/x64-windows/lib" }
