@@ -1,26 +1,31 @@
 #pragma once
 
 #include <vector>
+#include <stdio.h>
 #include "Circle.h"
 #include "Blade.h"
 #include "Object.h"
 
+#define M_PI 3.14159
 
 class Rotor : public Object
 {
 
 public:
-    Rotor(int radius, glm::vec2 position);
+    Rotor(int radius, glm::vec3 position);
 
+    void Update() override;
+
+    void Rotate(float angle);
 
 private:
 
-    glm::vec2 m_position;
+    glm::vec3 m_position;
 
     // center of the rotor.
     Circle* m_shaft;
 
-    Blade* m_blade;
+    std::vector<Object*> m_blades;
 
 
 };

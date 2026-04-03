@@ -6,3 +6,11 @@ void Scene::AddObjectToScene(Object* object)
 	objects[index] = object;
 	objectCount++;
 }
+
+void Scene::Update()
+{
+    for (auto& [id, obj] : objects)
+    {
+        obj->Update();
+    }
+}

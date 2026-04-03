@@ -13,6 +13,8 @@ public:
 
     int objectCount = 0;
 
+    void Update();
+
 private:
 
 };

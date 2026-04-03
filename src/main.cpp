@@ -12,7 +12,7 @@ void InitializeSimulation(Scene& scene)
 {
     
    // Rotor
-   scene.AddObjectToScene(new Rotor(20, glm::vec2{0, 0})); 
+   scene.AddObjectToScene(new Rotor(20, glm::vec3{0, 0, 0})); 
 
 }
 
@@ -51,7 +51,8 @@ int main(int argc, char** argv)
         }
 
         // rendering scene here
-        
+
+        Simulation.Update();
         renderer->RenderScene(Simulation);
         window->SwapBuffers();
 

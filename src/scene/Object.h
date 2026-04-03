@@ -33,6 +33,11 @@ public:
 
     void RotateAroundPivot(const glm::vec3& pivot, const glm::vec3& rotationDelta);
 
+    virtual void Update()
+    {
+        // default implementation
+    }
+
     // the 4 dimentional model of the object
     glm::mat4 model;
 
