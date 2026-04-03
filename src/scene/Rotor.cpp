@@ -17,7 +17,7 @@ Rotor::Rotor(int radius, glm::vec3 position)
 
     for (int blade_idx = 0; blade_idx < num_blades; blade_idx++)
     {
-        Blade* blade = new Blade(100, blade_idx * angle_per_blade);
+        Blade* blade = new Blade(position, 100, blade_idx * angle_per_blade);
         blade->RotateAroundPivot(position, glm::vec3(0, 0, blade_idx * angle_per_blade));
 
         ChildObjects[blade->GetObjectId()] = blade;
@@ -34,6 +34,6 @@ void Rotor::Rotate(float angle)
 {
     for (auto& blade : m_blades)
     {
-        blade->RotateAroundPivot(position, glm::vec3(0, 0, angle));
+        blade->RotateAroundPivot(this->position, glm::vec3(0, 0, angle));
     }
 }

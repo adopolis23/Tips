@@ -1,7 +1,7 @@
 #include "Blade.h"
 
 
-Blade::Blade(unsigned int length, float angle)
+Blade::Blade(glm::vec3 position, unsigned int length, float angle)
 {
     this->m_length = length;
     this->m_angle = angle;
@@ -9,6 +9,7 @@ Blade::Blade(unsigned int length, float angle)
     //this->m_width = this->m_length / this->m_ratio;
     this->m_width = 15;
 
+    this->position = position;
     this->position.y += length/2 + 25;
 
     GenerateVerticies();

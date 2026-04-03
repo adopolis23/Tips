@@ -4,7 +4,7 @@ class Blade : public Object
 {
 
 public:
-    Blade(unsigned int length, float angle);
+    Blade(glm::vec3 position, unsigned int length, float angle);
 
 private:
     void GenerateVerticies();
