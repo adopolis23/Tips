@@ -59,3 +59,8 @@ void Object::RotateAroundPivot(const glm::vec3& pivot, const glm::vec3& rotation
     GenerateObjectModel();
 }
 
+glm::vec3 Object::GetWorldVertexLocation(const glm::vec3& localVertex)
+{
+    glm::vec4 worldVertex = this->model * glm::vec4(localVertex, 1.0f);
+    return glm::vec3(worldVertex);
+}

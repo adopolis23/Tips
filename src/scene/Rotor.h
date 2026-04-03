@@ -12,15 +12,14 @@ class Rotor : public Object
 {
 
 public:
-    Rotor(int radius, glm::vec3 position);
+    Rotor(float radius, glm::vec3 position);
 
     void Update() override;
 
     void Rotate(float angle);
 
 private:
-
-    glm::vec3 m_position;
+    float m_radius;
 
     // center of the rotor.
     Circle* m_shaft;

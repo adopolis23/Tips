@@ -71,4 +71,12 @@ void Blade::GenerateVerticies()
     Verticies.push_back(0.0f);
 
     VertexCount += 6;
+
+    // store a vertex seperate for the blade tip to be used in calculations
+    this->m_bladeTip = glm::vec3(0, this->m_length/2, 0);
+}
+
+glm::vec3 Blade::GetBladeTip()
+{
+    return GetWorldVertexLocation(m_bladeTip);
 }

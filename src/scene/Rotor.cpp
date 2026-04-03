@@ -1,23 +1,24 @@
 #include "Rotor.h"
 
 
-Rotor::Rotor(int radius, glm::vec3 position) 
+Rotor::Rotor(float radius, glm::vec3 position) 
 {
-    this->m_position = position;
+    this->position = position;
+    this->m_radius = radius;
 
-    m_shaft = new Circle(30, radius, position);
+    m_shaft = new Circle(30, radius/6, position);
 
     // add the shaft to child objects
     ChildObjects[m_shaft->objectId] = m_shaft;
 
-    int num_blades = 10;
+    int num_blades = 1;
     float angle_per_blade = 2 * M_PI / num_blades;
 
     printf("Angle per blade is: %f\n", angle_per_blade);
 
     for (int blade_idx = 0; blade_idx < num_blades; blade_idx++)
     {
-        Blade* blade = new Blade(position, 100, blade_idx * angle_per_blade);
+        Blade* blade = new Blade(position, radius*5/6, blade_idx * angle_per_blade);
         blade->RotateAroundPivot(position, glm::vec3(0, 0, blade_idx * angle_per_blade));
 
         ChildObjects[blade->GetObjectId()] = blade;
@@ -27,7 +28,7 @@ Rotor::Rotor(int radius, glm::vec3 position)
 
 void Rotor::Update()
 {
-    Rotate(0.1f);
+    Rotate(0.01f);
 }
 
 void Rotor::Rotate(float angle)
@@ -35,5 +36,8 @@ void Rotor::Rotate(float angle)
     for (auto& blade : m_blades)
     {
         blade->RotateAroundPivot(this->position, glm::vec3(0, 0, angle));
+
+        glm::vec3 tip = ((Blade*)blade)->GetBladeTip();
+        printf("Blade tip: %f, %f, %f\n", tip.x, tip.y, tip.z);
     }
 }

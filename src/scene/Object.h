@@ -33,6 +33,9 @@ public:
 
     void RotateAroundPivot(const glm::vec3& pivot, const glm::vec3& rotationDelta);
 
+    // transforms a given vertex relative to the objects origin to the worls space based on the objects model
+    glm::vec3 GetWorldVertexLocation(const glm::vec3& localVertexLocation);
+
     virtual void Update()
     {
         // default implementation

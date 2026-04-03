@@ -1,10 +1,12 @@
 #include "Object.h"
+#include <glm/ext/vector_float3.hpp>
 
 class Blade : public Object
 {
 
 public:
     Blade(glm::vec3 position, unsigned int length, float angle);
+    glm::vec3 GetBladeTip();
 
 private:
     void GenerateVerticies();
@@ -12,6 +14,8 @@ private:
     float m_length;
     float m_width;
     float m_angle;
+
+    glm::vec3 m_bladeTip;
 
     // ratio of blades length to its width
     float m_ratio = 4;
