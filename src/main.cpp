@@ -33,7 +33,7 @@ int main(int argc, char** argv)
     Camera* camera = new Camera(width, height);
     Renderer* renderer = new Renderer(camera);
 
-    Scene Simulation;
+    Scene Simulation(0, 0, width, height);
     InitializeSimulation(Simulation);
 
 

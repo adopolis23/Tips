@@ -11,7 +11,7 @@ class Renderer
 
 public:
     Renderer(const Camera* cam);
-    void Render(Object* obj);
+    void Render(Object* obj, Scene& scene);
     void RenderScene(Scene& scene);
 private:
 

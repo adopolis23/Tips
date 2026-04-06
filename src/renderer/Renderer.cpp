@@ -1,7 +1,7 @@
 #include "Renderer.h"
 
 
-void Renderer::Render(Object* obj)
+void Renderer::Render(Object* obj, Scene& scene)
 {
     if (obj->vao != 0 && obj->VertexCount != 0)
     {
@@ -19,24 +19,34 @@ void Renderer::Render(Object* obj)
         defaultShader->setMat4("view", view);
         defaultShader->setMat4("projection", camera->projection);
 
+        glViewport(scene.Viewport.x, scene.Viewport.y, scene.Viewport.w, scene.Viewport.h);
+
+        glEnable(GL_SCISSOR_TEST);
+        glScissor(scene.Viewport.x, scene.Viewport.y, scene.Viewport.w, scene.Viewport.h);
+
+
+        // draw simulation
+        glClearColor(0.1f, 0.1f, 0.15f, 1.0f);
+        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
         glBindVertexArray(obj->vao);
         glDrawArrays(GL_TRIANGLES, 0, obj->VertexCount);
+
+        glDisable(GL_SCISSOR_TEST);
+        glViewport(0, 0, 800, 600);
     }
 
     // call render for each of this objects children.
     // base case is when child object has no children and then this recursion will not be called
     for (auto &[child_id, child_obj] : obj->ChildObjects)
     {
-        Render(child_obj); 
+        Render(child_obj, scene); 
     }
 }
 
 void Renderer::RenderScene(Scene& scene) {
-  glClearColor(0.1f, 0.1f, 0.15f, 1.0f);
-  glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-
   for (auto &[id, obj] : scene.objects) {
-    Render(obj);
+    Render(obj, scene);
   }
 }
 

@@ -1,5 +1,13 @@
 #include "Scene.h"
 
+Scene::Scene(int x, int y, int w, int h)
+{
+    this->Viewport.x = x;
+    this->Viewport.y = y;
+    this->Viewport.w = w;
+    this->Viewport.h = h;
+}
+
 void Scene::AddObjectToScene(Object* object)
 {
 	int index = object->objectId;
