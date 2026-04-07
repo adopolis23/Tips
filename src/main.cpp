@@ -8,12 +8,19 @@
 #include "scene/Rotor.h"
 #include "renderer/Renderer.h"
 
+#define SENSOR_Y_CORRECTION 30
 
 void InitializeSimulation(Scene& scene)
 {
     
    // Rotor
    scene.AddObjectToScene(new Rotor(200, glm::vec3{0, 0, 0})); 
+
+   // add the sensor objects to the scene
+   scene.AddObjectToScene(new Blade(glm::vec3(200, 0 - SENSOR_Y_CORRECTION, 0), 10, 10));
+   scene.AddObjectToScene(new Blade(glm::vec3(0, 200 - SENSOR_Y_CORRECTION, 0), 10, 10));
+   scene.AddObjectToScene(new Blade(glm::vec3(-200, 0 - SENSOR_Y_CORRECTION, 0), 10, 10));
+   scene.AddObjectToScene(new Blade(glm::vec3(0, -200 - SENSOR_Y_CORRECTION, 0), 10, 10));
 
 }
 
@@ -33,7 +40,9 @@ int main(int argc, char** argv)
     Camera* camera = new Camera(width, height);
     Renderer* renderer = new Renderer(camera);
 
-    Scene Simulation(0, 0, width, height);
+    Scene Simulation(10, 10, width/2 - 10, height/2 - 10);
+    Scene Simulation2(10, height/2 + 10, width - 20, height/2 - 20);
+    //Scene Simulation(0, 0, width, height);
     InitializeSimulation(Simulation);
 
 
@@ -58,6 +67,7 @@ int main(int argc, char** argv)
 
         Simulation.Update();
         renderer->RenderScene(Simulation);
+        renderer->RenderScene(Simulation2);
         window->SwapBuffers();
 
         // // 
@@ -75,7 +85,7 @@ int main(int argc, char** argv)
         if (frametime < target_frametime_milli)
         {
             float frametime_dt = target_frametime_milli - frametime;
-            std::this_thread::sleep_for(std::chrono::milliseconds((int)(frametime_dt)));            
+            // std::this_thread::sleep_for(std::chrono::milliseconds((int)(frametime_dt)));            
         }
 
         if (iter % 200 == 0)

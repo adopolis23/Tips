@@ -19,21 +19,9 @@ void Renderer::Render(Object* obj, Scene& scene)
         defaultShader->setMat4("view", view);
         defaultShader->setMat4("projection", camera->projection);
 
-        glViewport(scene.Viewport.x, scene.Viewport.y, scene.Viewport.w, scene.Viewport.h);
-
-        glEnable(GL_SCISSOR_TEST);
-        glScissor(scene.Viewport.x, scene.Viewport.y, scene.Viewport.w, scene.Viewport.h);
-
-
-        // draw simulation
-        glClearColor(0.1f, 0.1f, 0.15f, 1.0f);
-        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-
         glBindVertexArray(obj->vao);
         glDrawArrays(GL_TRIANGLES, 0, obj->VertexCount);
 
-        glDisable(GL_SCISSOR_TEST);
-        glViewport(0, 0, 800, 600);
     }
 
     // call render for each of this objects children.
@@ -45,9 +33,22 @@ void Renderer::Render(Object* obj, Scene& scene)
 }
 
 void Renderer::RenderScene(Scene& scene) {
-  for (auto &[id, obj] : scene.objects) {
-    Render(obj, scene);
-  }
+    
+    glViewport(scene.Viewport.x, scene.Viewport.y, scene.Viewport.w, scene.Viewport.h);
+
+    glEnable(GL_SCISSOR_TEST);
+    glScissor(scene.Viewport.x, scene.Viewport.y, scene.Viewport.w, scene.Viewport.h);
+
+    // draw simulation
+    glClearColor(0.1f, 0.1f, 0.15f, 1.0f);
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+    for (auto &[id, obj] : scene.objects) {
+        Render(obj, scene);
+    }
+
+    glDisable(GL_SCISSOR_TEST);
+    glViewport(0, 0, 800, 600);
 }
 
 Renderer::Renderer(const Camera *cam) : camera(cam) {

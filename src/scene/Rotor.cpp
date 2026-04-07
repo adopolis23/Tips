@@ -11,14 +11,14 @@ Rotor::Rotor(float radius, glm::vec3 position)
     // add the shaft to child objects
     ChildObjects[m_shaft->objectId] = m_shaft;
 
-    int num_blades = 1;
+    int num_blades = 4;
     float angle_per_blade = 2 * M_PI / num_blades;
 
     printf("Angle per blade is: %f\n", angle_per_blade);
 
     for (int blade_idx = 0; blade_idx < num_blades; blade_idx++)
     {
-        Blade* blade = new Blade(position, radius*5/6, blade_idx * angle_per_blade);
+        Blade* blade = new Blade(position, radius*5/6, 15);
         blade->RotateAroundPivot(position, glm::vec3(0, 0, blade_idx * angle_per_blade));
 
         ChildObjects[blade->GetObjectId()] = blade;
@@ -37,7 +37,7 @@ void Rotor::Rotate(float angle)
     {
         blade->RotateAroundPivot(this->position, glm::vec3(0, 0, angle));
 
-        glm::vec3 tip = ((Blade*)blade)->GetBladeTip();
-        printf("Blade tip: %f, %f, %f\n", tip.x, tip.y, tip.z);
+        //glm::vec3 tip = ((Blade*)blade)->GetBladeTip();
+        //printf("Blade tip: %f, %f, %f\n", tip.x, tip.y, tip.z);
     }
 }

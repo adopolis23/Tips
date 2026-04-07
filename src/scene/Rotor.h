@@ -3,10 +3,9 @@
 #include <vector>
 #include <stdio.h>
 #include "Circle.h"
+#include "Globals.h"
 #include "Blade.h"
 #include "Object.h"
-
-#define M_PI 3.14159
 
 class Rotor : public Object
 {

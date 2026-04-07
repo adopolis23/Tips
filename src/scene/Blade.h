@@ -5,7 +5,7 @@ class Blade : public Object
 {
 
 public:
-    Blade(glm::vec3 position, unsigned int length, float angle);
+    Blade(glm::vec3 position, unsigned int length, float width);
     glm::vec3 GetBladeTip();
 
 private:
@@ -13,7 +13,6 @@ private:
 
     float m_length;
     float m_width;
-    float m_angle;
 
     glm::vec3 m_bladeTip;
 

@@ -1,13 +1,10 @@
 #include "Blade.h"
 
 
-Blade::Blade(glm::vec3 position, unsigned int length, float angle)
+Blade::Blade(glm::vec3 position, unsigned int length, float width)
 {
     this->m_length = length;
-    this->m_angle = angle;
-
-    //this->m_width = this->m_length / this->m_ratio;
-    this->m_width = 15;
+    this->m_width = width;
 
     this->position = position;
     this->position.y += length/2 + 25;
