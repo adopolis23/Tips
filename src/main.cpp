@@ -5,22 +5,30 @@
 #include "window/Window.h"
 #include "scene/Scene.h"
 #include "scene/Camera.h"
+#include "engine/Engine.h"
 #include "scene/Rotor.h"
 #include "renderer/Renderer.h"
 
 #define SENSOR_Y_CORRECTION 30
 
-void InitializeSimulation(Scene& scene)
+void InitializeSimulation(Scene& scene, Engine& engine)
 {
     
    // Rotor
    scene.AddObjectToScene(new Rotor(200, glm::vec3{0, 0, 0})); 
 
-   // add the sensor objects to the scene
+   // add the visual sensor objects to the scene
    scene.AddObjectToScene(new Blade(glm::vec3(200, 0 - SENSOR_Y_CORRECTION, 0), 10, 10));
+   engine.AddSensor(glm::vec3(200, 0 - SENSOR_Y_CORRECTION, 0));
+
    scene.AddObjectToScene(new Blade(glm::vec3(0, 200 - SENSOR_Y_CORRECTION, 0), 10, 10));
+   engine.AddSensor(glm::vec3(0, 200 - SENSOR_Y_CORRECTION, 0));
+
    scene.AddObjectToScene(new Blade(glm::vec3(-200, 0 - SENSOR_Y_CORRECTION, 0), 10, 10));
+   engine.AddSensor(glm::vec3(-200, 0 - SENSOR_Y_CORRECTION, 0));
+
    scene.AddObjectToScene(new Blade(glm::vec3(0, -200 - SENSOR_Y_CORRECTION, 0), 10, 10));
+   engine.AddSensor(glm::vec3(0, -200 - SENSOR_Y_CORRECTION, 0));
 
 }
 
@@ -43,7 +51,10 @@ int main(int argc, char** argv)
     Scene Simulation(10, 10, width/2 - 10, height/2 - 10);
     Scene Simulation2(10, height/2 + 10, width - 20, height/2 - 20);
     //Scene Simulation(0, 0, width, height);
-    InitializeSimulation(Simulation);
+
+    Engine engine(&Simulation);
+
+    InitializeSimulation(Simulation, engine);
 
 
 
@@ -66,6 +77,7 @@ int main(int argc, char** argv)
         // rendering scene here
 
         Simulation.Update();
+        engine.Update();
         renderer->RenderScene(Simulation);
         renderer->RenderScene(Simulation2);
         window->SwapBuffers();

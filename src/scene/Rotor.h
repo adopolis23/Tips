@@ -17,6 +17,10 @@ public:
 
     void Rotate(float angle);
 
+    unsigned int GetNumBlades();
+
+    Object* GetBlade(unsigned int index); 
+
 private:
     float m_radius;
 
