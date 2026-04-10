@@ -20,6 +20,7 @@ public:
     unsigned int GetNumBlades();
 
     Object* GetBlade(unsigned int index); 
+    std::vector<Object*> m_blades;
 
 private:
     float m_radius;
@@ -27,7 +28,6 @@ private:
     // center of the rotor.
     Circle* m_shaft;
 
-    std::vector<Object*> m_blades;
 
 
 };
