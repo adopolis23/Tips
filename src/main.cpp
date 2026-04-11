@@ -1,13 +1,12 @@
 #include <SDL2/SDL_video.h>
-#include <iostream>
 #include <chrono>
-#include <thread>
 #include "window/Window.h"
 #include "scene/Scene.h"
 #include "scene/Camera.h"
 #include "engine/Engine.h"
 #include "scene/Rotor.h"
 #include "renderer/Renderer.h"
+#include "realtimeGraph/RealtimeGraph.h"
 
 #define SENSOR_Y_CORRECTION 30
 
@@ -53,6 +52,7 @@ int main(int argc, char** argv)
     //Scene Simulation(0, 0, width, height);
 
     Engine engine(&Simulation);
+    RealtimeGraph realtimeGraph(1024);
 
     InitializeSimulation(Simulation, engine);
 

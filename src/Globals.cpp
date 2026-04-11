@@ -1,3 +1,3 @@
 #include "Globals.h"
 
-float G_CapacitiveKernelSize = 10;
+float G_CapacitiveKernelSize = 100;

@@ -1,6 +1,7 @@
 #pragma once
 
 #include "scene/Scene.h"
+#include "realtimeGraph/RealtimeGraph.h"
 #include "shader/Shader.h"
 #include <glad/glad.h>
 #include <glm/gtc/matrix_transform.hpp>
@@ -13,6 +14,8 @@ public:
     Renderer(const Camera* cam);
     void Render(Object* obj, Scene& scene);
     void RenderScene(Scene& scene);
+
+    void RenderRealtimeGraph(RealtimeGraph& rtg);
 private:
 
     glm::mat4 view;

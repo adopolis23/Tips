@@ -33,13 +33,8 @@ float Engine::ReadSensorValue(int index)
                 tipPosition = ((Blade*)blade)->GetBladeTip(); 
 
                 distToTip = glm::distance(thisPosition, tipPosition);
-                printf("Dist to tip is = %f\n", distToTip);
-
-                float value = CapacitySmoothingKernel(G_CapacitiveKernelSize, distToTip);
-                printf("Raw Value = %f\n", value);
-
-                sensorValue += value;
-                
+                sensorValue += CapacitySmoothingKernel(G_CapacitiveKernelSize, distToTip);
+;
                 //printf("Blade tip: %f, %f, %f\n", tip.x, tip.y, tip.z);
            }
        }
@@ -60,6 +55,6 @@ void Engine::Update()
 
 float Engine::CapacitySmoothingKernel(float radius, float dist)
 {
-    return radius * (1 / dist * dist);
+    return radius * (1 / (dist * dist));
 }
 

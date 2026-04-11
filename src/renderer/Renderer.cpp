@@ -60,3 +60,10 @@ Renderer::Renderer(const Camera *cam) : camera(cam) {
                              "src/shaders/fragment/default_fragment.glsl");
 }
 
+void Renderer::RenderRealtimeGraph(RealtimeGraph& rtg)
+{
+    glBindBuffer(GL_ARRAY_BUFFER, rtg.mVbo);
+    glVertexPointer(2, GL_FLOAT, 0, 0);
+    glDrawArrays(GL_LINE_STRIP, 0, rtg.mCapacity);
+}
+
