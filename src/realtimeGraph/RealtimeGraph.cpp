@@ -3,7 +3,7 @@
 RealtimeGraph::RealtimeGraph(int x, int y, int w, int h, std::size_t capacity)
 {
     this->mCapacity = capacity;
-    this->mData.resize(capacity * sizeof(DataPoint));
+    this->mData.resize(capacity);
 
     this->mWritePosition = 0;
 
@@ -12,13 +12,26 @@ RealtimeGraph::RealtimeGraph(int x, int y, int w, int h, std::size_t capacity)
     glBindBuffer(GL_ARRAY_BUFFER, mVbo);
     glBufferData(GL_ARRAY_BUFFER, capacity * sizeof(DataPoint), nullptr, GL_DYNAMIC_DRAW);
 
+    // Create VAO so we don't accidentally overwrite other VAOs' attribute state
+    glGenVertexArrays(1, &mVao);
+    glBindVertexArray(mVao);
+
+    // bind VBO and setup attribute layout for this VAO
+    glBindBuffer(GL_ARRAY_BUFFER, mVbo);
+    // Position attribute (location 0)
+    glEnableVertexAttribArray(0);
+    glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, sizeof(DataPoint), (void*)0);
+
+    // unbind VAO to keep state isolated
+    glBindVertexArray(0);
+
     // create the default shader
     mDefaultShader = new Shader("src/shaders/vertex/realtimeGraph_vertex.glsl",
                          "src/shaders/fragment/default_fragment.glsl");
 
 
     // Initialize with zeros
-    for (int i = 0; i < mCapacity; i++)
+    for (std::size_t i = 0; i < mCapacity; i++)
     {
         mData[i] = DataPoint{static_cast<float>(i), 0.0f};
     }
@@ -53,6 +66,11 @@ void RealtimeGraph::AddDataPoint(float x, float y) {
 GLuint RealtimeGraph::GetVbo()
 {
     return this->mVbo;
+}
+
+GLuint RealtimeGraph::GetVao()
+{
+    return this->mVao;
 }
 
 std::size_t RealtimeGraph::GetCapacity()

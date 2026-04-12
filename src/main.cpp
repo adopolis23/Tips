@@ -78,7 +78,8 @@ int main(int argc, char** argv)
         engine.Update();
 
         renderer->RenderScene(Simulation);
-        //renderer->RenderRealtimeGraph(realtimeGraph);
+        renderer->RenderRealtimeGraph(realtimeGraph);
+        
         
         window->SwapBuffers();
 
@@ -97,7 +98,7 @@ int main(int argc, char** argv)
         if (frametime < target_frametime_milli)
         {
             float frametime_dt = target_frametime_milli - frametime;
-            // std::this_thread::sleep_for(std::chrono::milliseconds((int)(frametime_dt)));            
+            //std::this_thread::sleep_for(std::chrono::milliseconds((int)(frametime_dt)));            
         }
 
         if (iter % 200 == 0)

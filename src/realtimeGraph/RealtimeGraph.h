@@ -22,6 +22,7 @@ public:
     void AddDataPoint(float x, float y);
 
     GLuint GetVbo();
+    GLuint GetVao();
     std::size_t GetCapacity();
     Shader* GetShader();
     SDL_Rect GetViewport();
@@ -33,6 +34,7 @@ private:
     std::vector<DataPoint> mData;
 
     GLuint mVbo;
+    GLuint mVao;
 
     uint32_t mWritePosition;
 

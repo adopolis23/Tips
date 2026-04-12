@@ -77,18 +77,15 @@ void Renderer::RenderRealtimeGraph(RealtimeGraph& rtg)
     shader->setMat4("view", view);
     shader->setMat4("projection", camera->projection);
 
-    // Set up vertex attributes 
+    // Bind the graph VAO (attribute state is kept isolated in its own VAO)
+    glBindVertexArray(rtg.GetVao());
     glBindBuffer(GL_ARRAY_BUFFER, rtg.GetVbo());
-    
-    // Position attribute (location 0)
-    glEnableVertexAttribArray(0);
-    glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, sizeof(DataPoint), (void*)0);
-    
+
     // Draw
-    glDrawArrays(GL_LINE_STRIP, 0, rtg.GetCapacity());
+    glDrawArrays(GL_LINE_STRIP, 0, (GLsizei)rtg.GetCapacity());
     
-    // Disable attribute array
-    glDisableVertexAttribArray(0);
+    // Unbind VAO
+    glBindVertexArray(0);
 
     glDisable(GL_SCISSOR_TEST);
     glViewport(0, 0, camera->window_width, camera->window_height);

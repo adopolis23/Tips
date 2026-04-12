@@ -56,7 +56,7 @@ project "Tips"
 
     filter "system:windows"
         links { "SDL2", "opengl32" }
-        defines { 'PATH="E:/dev/OpenGL/"' }
+        defines { 'PATH="E:/dev/Tips/"' }
 
     filter "configurations:Debug"
         defines { "DEBUG" }
