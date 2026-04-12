@@ -48,7 +48,7 @@ void Engine::Update()
     for (int sensorIndex = 0; sensorIndex < mCapactiveSensorPostions.size(); sensorIndex++)
     {
         float sensorValue = this->ReadSensorValue(sensorIndex);
-        printf("Sensor value is: %f\n", sensorValue);
+        //printf("Sensor value is: %f\n", sensorValue);
         break;
     }
 }

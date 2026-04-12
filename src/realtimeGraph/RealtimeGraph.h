@@ -5,6 +5,8 @@
 #include <cstdint>
 #include <cstdlib>
 #include <vector>
+#include "shaders/Shader.h"
+#include <SDL2/SDL.h>
 
 struct DataPoint
 {
@@ -16,8 +18,13 @@ class RealtimeGraph
 {
 
 public:
-    RealtimeGraph(std::size_t capacity);
+    RealtimeGraph(int x, int y, int w, int h, std::size_t capacity);
     void AddDataPoint(float x, float y);
+
+    GLuint GetVbo();
+    std::size_t GetCapacity();
+    Shader* GetShader();
+    SDL_Rect GetViewport();
 
 private:
     std::size_t mNumDataPoints = 0;
@@ -28,5 +35,9 @@ private:
     GLuint mVbo;
 
     uint32_t mWritePosition;
+
+    Shader* mDefaultShader;
+
+    SDL_Rect mViewport;
 
 };

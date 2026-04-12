@@ -2,7 +2,7 @@
 
 #include "scene/Scene.h"
 #include "realtimeGraph/RealtimeGraph.h"
-#include "shader/Shader.h"
+#include "shaders/Shader.h"
 #include <glad/glad.h>
 #include <glm/gtc/matrix_transform.hpp>
 #include "scene/Camera.h"

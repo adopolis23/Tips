@@ -52,7 +52,7 @@ project "Tips"
 
     filter "system:linux"
         links { "SDL2", "GL", "dl", "pthread" }
-        defines { 'PATH="/home/bran406/dev/OpenGL/"' }
+        defines { 'PATH="/home/bran406/dev/Tips/"' }
 
     filter "system:windows"
         links { "SDL2", "opengl32" }

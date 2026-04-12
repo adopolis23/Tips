@@ -48,7 +48,7 @@ void Renderer::RenderScene(Scene& scene) {
     }
 
     glDisable(GL_SCISSOR_TEST);
-    glViewport(0, 0, 800, 600);
+    glViewport(0, 0, camera->window_width, camera->window_height);
 }
 
 Renderer::Renderer(const Camera *cam) : camera(cam) {
@@ -62,8 +62,35 @@ Renderer::Renderer(const Camera *cam) : camera(cam) {
 
 void Renderer::RenderRealtimeGraph(RealtimeGraph& rtg)
 {
-    glBindBuffer(GL_ARRAY_BUFFER, rtg.mVbo);
-    glVertexPointer(2, GL_FLOAT, 0, 0);
-    glDrawArrays(GL_LINE_STRIP, 0, rtg.mCapacity);
+    SDL_Rect viewport = rtg.GetViewport();
+    glViewport(viewport.x, viewport.y, viewport.w, viewport.h);
+
+    glEnable(GL_SCISSOR_TEST);
+    glScissor(viewport.x, viewport.y, viewport.w, viewport.h);
+
+    glClearColor(0.1f, 0.1f, 0.15f, 1.0f);
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+    Shader* shader = rtg.GetShader();
+    shader->bind();
+
+    shader->setMat4("view", view);
+    shader->setMat4("projection", camera->projection);
+
+    // Set up vertex attributes 
+    glBindBuffer(GL_ARRAY_BUFFER, rtg.GetVbo());
+    
+    // Position attribute (location 0)
+    glEnableVertexAttribArray(0);
+    glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, sizeof(DataPoint), (void*)0);
+    
+    // Draw
+    glDrawArrays(GL_LINE_STRIP, 0, rtg.GetCapacity());
+    
+    // Disable attribute array
+    glDisableVertexAttribArray(0);
+
+    glDisable(GL_SCISSOR_TEST);
+    glViewport(0, 0, camera->window_width, camera->window_height);
 }
 

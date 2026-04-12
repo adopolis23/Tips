@@ -48,11 +48,9 @@ int main(int argc, char** argv)
     Renderer* renderer = new Renderer(camera);
 
     Scene Simulation(10, 10, width/2 - 10, height/2 - 10);
-    Scene Simulation2(10, height/2 + 10, width - 20, height/2 - 20);
-    //Scene Simulation(0, 0, width, height);
 
     Engine engine(&Simulation);
-    RealtimeGraph realtimeGraph(1024);
+    RealtimeGraph realtimeGraph(10, height/2 + 10, width - 20, height/2 - 20, 4096);
 
     InitializeSimulation(Simulation, engine);
 
@@ -78,8 +76,10 @@ int main(int argc, char** argv)
 
         Simulation.Update();
         engine.Update();
+
         renderer->RenderScene(Simulation);
-        renderer->RenderScene(Simulation2);
+        //renderer->RenderRealtimeGraph(realtimeGraph);
+        
         window->SwapBuffers();
 
         // // 
