@@ -1,7 +1,9 @@
 #include "RealtimeGraph.h"
 
-RealtimeGraph::RealtimeGraph(int x, int y, int w, int h, std::size_t capacity)
+RealtimeGraph::RealtimeGraph(int x, int y, int w, int h, std::size_t capacity, Camera* camera)
 {
+	this->mCamera = camera;
+
     this->mCapacity = capacity;
     this->mData.resize(capacity);
 
@@ -46,6 +48,7 @@ RealtimeGraph::RealtimeGraph(int x, int y, int w, int h, std::size_t capacity)
     this->mViewport.w = w;
     this->mViewport.h = h;
 
+	GenerateModel();
 }
 
 void RealtimeGraph::AddDataPoint(float x, float y) {
@@ -87,4 +90,19 @@ Shader* RealtimeGraph::GetShader()
 SDL_Rect RealtimeGraph::GetViewport()
 {
     return this->mViewport;
+}
+
+const glm::mat4& RealtimeGraph::GetModel()
+{
+    return this->mModel;
+}
+
+void RealtimeGraph::GenerateModel()
+{
+    float scaleX = static_cast<float>(mCamera->window_width) / static_cast<float>(mCapacity);
+    this->mModel = glm::mat4(1.0f);
+
+    // translate first to left_window_bound, then scale X so each unit of x maps into the viewport width
+    this->mModel = glm::translate(this->mModel, glm::vec3(mCamera->left_window_bound, 0.0f, 0.0f));
+    this->mModel = glm::scale(this->mModel, glm::vec3(scaleX, 1.0f, 1.0f));
 }

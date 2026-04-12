@@ -74,6 +74,7 @@ void Renderer::RenderRealtimeGraph(RealtimeGraph& rtg)
     Shader* shader = rtg.GetShader();
     shader->bind();
 
+    shader->setMat4("model", rtg.GetModel());
     shader->setMat4("view", view);
     shader->setMat4("projection", camera->projection);
 

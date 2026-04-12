@@ -50,7 +50,7 @@ int main(int argc, char** argv)
     Scene Simulation(10, 10, width/2 - 10, height/2 - 10);
 
     Engine engine(&Simulation);
-    RealtimeGraph realtimeGraph(10, height/2 + 10, width - 20, height/2 - 20, 4096);
+    RealtimeGraph realtimeGraph(10, height/2 + 10, width - 20, height/2 - 20, 4096, camera);
 
     InitializeSimulation(Simulation, engine);
 
