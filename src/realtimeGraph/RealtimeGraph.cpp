@@ -51,9 +51,16 @@ RealtimeGraph::RealtimeGraph(int x, int y, int w, int h, std::size_t capacity, C
 	GenerateModel();
 }
 
-void RealtimeGraph::AddDataPoint(float x, float y) {
+void RealtimeGraph::AddDataPoint(float y, int channel) {
 
-    this->mData[this->mWritePosition] = DataPoint{x, y};
+    printf("Adding datapoint: %ld, %f, %d\n", this->mNumDataPoints, y, channel);
+
+    this->mData[this->mWritePosition] = DataPoint{this->mNumDataPoints, y, channel};
+    
+    if (mNumDataPoints < mCapacity)
+    {
+        mNumDataPoints++;
+    }
     
     // Update the buffer at this position
     glBindBuffer(GL_ARRAY_BUFFER, mVbo);
@@ -105,4 +112,10 @@ void RealtimeGraph::GenerateModel()
     // translate first to left_window_bound, then scale X so each unit of x maps into the viewport width
     this->mModel = glm::translate(this->mModel, glm::vec3(mCamera->left_window_bound, 0.0f, 0.0f));
     this->mModel = glm::scale(this->mModel, glm::vec3(scaleX, 1.0f, 1.0f));
+
+
+    // create the scaling for the Y axis, TODO: this needs to be done automatically in the future
+    //float scaleY = static_cast<float>(mCamera->top_window_bound) / 0.10;
+    float gain = 200;
+    this->mModel = glm::scale(this->mModel, glm::vec3(1.0f, gain, 1.0f));
 }

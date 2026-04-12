@@ -49,6 +49,16 @@ void Engine::Update()
     {
         float sensorValue = this->ReadSensorValue(sensorIndex);
         //printf("Sensor value is: %f\n", sensorValue);
+        
+        if (mDataCallback)
+        {
+            mDataCallback(sensorValue, sensorIndex);
+        }
+        else
+        {
+            printf("Engine-Warning: Data is being read but data callback not set!\n");
+        }
+        
         break;
     }
 }
@@ -58,3 +68,7 @@ float Engine::CapacitySmoothingKernel(float radius, float dist)
     return radius * (1 / (dist * dist));
 }
 
+void Engine::SetDataCallback(std::function<void(float, uint8_t)> func)
+{
+    this->mDataCallback = func;
+}

@@ -7,20 +7,16 @@
 #include <vector>
 #include "shaders/Shader.h"
 #include "scene/Camera.h"
+#include "Globals.h"
 #include <SDL2/SDL.h>
 
-struct DataPoint
-{
-    float x;
-    float y;
-};
 
 class RealtimeGraph
 {
 
 public:
     RealtimeGraph(int x, int y, int w, int h, std::size_t capacity, Camera* camera);
-    void AddDataPoint(float x, float y);
+    void AddDataPoint(float y, int channel);
 
     GLuint GetVbo();
     GLuint GetVao();

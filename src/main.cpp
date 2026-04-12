@@ -20,14 +20,14 @@ void InitializeSimulation(Scene& scene, Engine& engine)
    scene.AddObjectToScene(new Blade(glm::vec3(200, 0 - SENSOR_Y_CORRECTION, 0), 10, 10));
    engine.AddSensor(glm::vec3(200, 0 - SENSOR_Y_CORRECTION, 0));
 
-   scene.AddObjectToScene(new Blade(glm::vec3(0, 200 - SENSOR_Y_CORRECTION, 0), 10, 10));
-   engine.AddSensor(glm::vec3(0, 200 - SENSOR_Y_CORRECTION, 0));
+   //scene.AddObjectToScene(new Blade(glm::vec3(0, 200 - SENSOR_Y_CORRECTION, 0), 10, 10));
+   //engine.AddSensor(glm::vec3(0, 200 - SENSOR_Y_CORRECTION, 0));
 
-   scene.AddObjectToScene(new Blade(glm::vec3(-200, 0 - SENSOR_Y_CORRECTION, 0), 10, 10));
-   engine.AddSensor(glm::vec3(-200, 0 - SENSOR_Y_CORRECTION, 0));
+   //scene.AddObjectToScene(new Blade(glm::vec3(-200, 0 - SENSOR_Y_CORRECTION, 0), 10, 10));
+   //engine.AddSensor(glm::vec3(-200, 0 - SENSOR_Y_CORRECTION, 0));
 
-   scene.AddObjectToScene(new Blade(glm::vec3(0, -200 - SENSOR_Y_CORRECTION, 0), 10, 10));
-   engine.AddSensor(glm::vec3(0, -200 - SENSOR_Y_CORRECTION, 0));
+   //scene.AddObjectToScene(new Blade(glm::vec3(0, -200 - SENSOR_Y_CORRECTION, 0), 10, 10));
+   //engine.AddSensor(glm::vec3(0, -200 - SENSOR_Y_CORRECTION, 0));
 
 }
 
@@ -49,8 +49,10 @@ int main(int argc, char** argv)
 
     Scene Simulation(10, 10, width/2 - 10, height/2 - 10);
 
-    Engine engine(&Simulation);
     RealtimeGraph realtimeGraph(10, height/2 + 10, width - 20, height/2 - 20, 4096, camera);
+
+    Engine engine(&Simulation);
+    engine.SetDataCallback([&realtimeGraph](float value, int channel) { realtimeGraph.AddDataPoint(value, channel); });
 
     InitializeSimulation(Simulation, engine);
 

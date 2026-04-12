@@ -3,6 +3,7 @@
 #include <vector>
 #include <stdio.h>
 #include <glm/glm.hpp>
+#include <functional>
 #include "scene/Scene.h"
 #include "scene/Object.h"
 #include "scene/Blade.h"
@@ -23,6 +24,8 @@ public:
 
     float ReadSensorValue(int index);
 
+    void SetDataCallback(std::function<void(float, uint8_t)> func);
+
 private:
     std::vector<glm::vec3> mCapactiveSensorPostions;
 
@@ -30,5 +33,6 @@ private:
 
     Scene* mScene;
 
-
+    // data callback will add a datapoint with the value (float) and the channel (int)
+    std::function<void(float, uint8_t)> mDataCallback;
 };
