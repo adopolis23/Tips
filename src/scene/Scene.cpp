@@ -15,10 +15,10 @@ void Scene::AddObjectToScene(Object* object)
 	objectCount++;
 }
 
-void Scene::Update()
+void Scene::Update(float dt)
 {
     for (auto& [id, obj] : objects)
     {
-        obj->Update();
+        obj->Update(dt);
     }
 }

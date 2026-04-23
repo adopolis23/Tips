@@ -53,9 +53,14 @@ RealtimeGraph::RealtimeGraph(int x, int y, int w, int h, std::size_t capacity, C
 
 void RealtimeGraph::AddDataPoint(float y, int channel) {
 
-    printf("Adding datapoint: %ld, %f, %d\n", this->mNumDataPoints, y, channel);
+    //printf("Adding datapoint: %ld, %f, %d\n", this->mWritePosition, y, channel);
 
-    this->mData[this->mWritePosition] = DataPoint{this->mNumDataPoints, y, channel};
+    if (mWritePosition == mCapacity)
+    {
+        DataBufferLeftShift(1);
+    }
+
+    this->mData[this->mWritePosition] = DataPoint{this->mWritePosition, y, channel};
     
     if (mNumDataPoints < mCapacity)
     {
@@ -64,13 +69,14 @@ void RealtimeGraph::AddDataPoint(float y, int channel) {
     
     // Update the buffer at this position
     glBindBuffer(GL_ARRAY_BUFFER, mVbo);
-    glBufferSubData(GL_ARRAY_BUFFER, 
-                    mWritePosition * sizeof(DataPoint), 
-                    sizeof(DataPoint),  
-                    &mData[mWritePosition]);
+    glBufferSubData(GL_ARRAY_BUFFER, mWritePosition * sizeof(DataPoint), sizeof(DataPoint),  &mData[mWritePosition]);
     
     // Move to next position (circular)
-    mWritePosition = (mWritePosition + 1) % mCapacity;
+    //mWritePosition = (mWritePosition + 1) % mCapacity;
+    if (mWritePosition < mCapacity)
+    {
+        mWritePosition++;
+    }
 }
 
 GLuint RealtimeGraph::GetVbo()
@@ -118,4 +124,21 @@ void RealtimeGraph::GenerateModel()
     //float scaleY = static_cast<float>(mCamera->top_window_bound) / 0.10;
     float gain = 200;
     this->mModel = glm::scale(this->mModel, glm::vec3(1.0f, gain, 1.0f));
+}
+
+
+void RealtimeGraph::DataBufferLeftShift(uint8_t n)
+{
+    for (int i = 0; i < n; i++)
+    {
+        for (int j = 0; j < mNumDataPoints-1; j++)
+        {
+            mData[j] = mData[j+1];
+        }
+    }
+
+
+    // Update the whole buffer
+    glBindBuffer(GL_ARRAY_BUFFER, mVbo);
+    glBufferSubData(GL_ARRAY_BUFFER, 0, sizeof(DataPoint) * mNumDataPoints,  &mData[0]);
 }

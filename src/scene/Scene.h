@@ -18,7 +18,7 @@ public:
 
     SDL_Rect Viewport;
 
-    void Update();
+    void Update(float dt);
 
 private:
     

@@ -36,7 +36,7 @@ public:
     // transforms a given vertex relative to the objects origin to the worls space based on the objects model
     glm::vec3 GetWorldVertexLocation(const glm::vec3& localVertexLocation);
 
-    virtual void Update()
+    virtual void Update(float dt)
     {
         // default implementation
     }

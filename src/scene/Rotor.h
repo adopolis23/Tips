@@ -13,7 +13,7 @@ class Rotor : public Object
 public:
     Rotor(float radius, glm::vec3 position);
 
-    void Update() override;
+    void Update(float dt) override;
 
     void Rotate(float angle);
 
@@ -28,6 +28,8 @@ private:
     // center of the rotor.
     Circle* m_shaft;
 
+    // rotation speed of the rotor in radians per second
+    float mRotationSpeed = M_PI / 2; // 1 rotation every 4 second
 
 
 };

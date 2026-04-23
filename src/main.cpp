@@ -38,9 +38,6 @@ int main(int argc, char** argv)
     int width = 800;
     int height = 600;
 
-    int target_fps = 15;
-    float target_frametime_milli = 1000 / (float) target_fps;
-
     bool running = true;
 
     Window* window = new Window("Tips Blade Clearance Simulation", width, height, 0, SDL_WINDOWPOS_CENTERED); 
@@ -49,7 +46,7 @@ int main(int argc, char** argv)
 
     Scene Simulation(10, 10, width/2 - 10, height/2 - 10);
 
-    RealtimeGraph realtimeGraph(10, height/2 + 10, width - 20, height/2 - 20, 4096, camera);
+    RealtimeGraph realtimeGraph(10, height/2 + 10, width - 20, height/2 - 20, 512, camera);
 
     Engine engine(&Simulation);
     engine.SetDataCallback([&realtimeGraph](float value, int channel) { realtimeGraph.AddDataPoint(value, channel); });
@@ -76,12 +73,11 @@ int main(int argc, char** argv)
 
         // rendering scene here
 
-        Simulation.Update();
+        Simulation.Update(frametime);
         engine.Update();
 
         renderer->RenderScene(Simulation);
         renderer->RenderRealtimeGraph(realtimeGraph);
-        
         
         window->SwapBuffers();
 
@@ -94,14 +90,6 @@ int main(int argc, char** argv)
 
         frametime = iterationTime.count();
         float fps = 1 / timeInSeconds.count();
-
-        // if the frametime is less than the target frametime for our target fps
-        // this means that the simulation is running too fast so we need to sleep for the difference
-        if (frametime < target_frametime_milli)
-        {
-            float frametime_dt = target_frametime_milli - frametime;
-            //std::this_thread::sleep_for(std::chrono::milliseconds((int)(frametime_dt)));            
-        }
 
         if (iter % 200 == 0)
         {

@@ -29,6 +29,8 @@ public:
     void GenerateModel();
 
 private:
+    void DataBufferLeftShift(uint8_t n);
+
     std::size_t mNumDataPoints = 0;
     std::size_t mCapacity;
 
