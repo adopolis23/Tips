@@ -1,4 +1,6 @@
 #include "RealtimeGraph.h"
+#include <cstring> // for std::memmove
+#include <cstdio>
 
 RealtimeGraph::RealtimeGraph(int x, int y, int w, int h, std::size_t capacity, Camera* camera)
 {
@@ -53,14 +55,15 @@ RealtimeGraph::RealtimeGraph(int x, int y, int w, int h, std::size_t capacity, C
 
 void RealtimeGraph::AddDataPoint(float y, int channel) {
 
-    //printf("Adding datapoint: %ld, %f, %d\n", this->mWritePosition, y, channel);
+    //printf("Adding datapoint: %zu, %f, %d\n", this->mWritePosition, y, channel);
 
-    if (mWritePosition == mCapacity)
+    if (mWritePosition == mCapacity - 1 && mNumDataPoints == mCapacity)
     {
+        // shift left one so the oldest sample is dropped and the last slot becomes free for the new point
         DataBufferLeftShift(1);
     }
 
-    this->mData[this->mWritePosition] = DataPoint{this->mWritePosition, y, channel};
+    this->mData[this->mWritePosition] = DataPoint{(float)this->mWritePosition, y, (uint8_t)channel};
     
     if (mNumDataPoints < mCapacity)
     {
@@ -73,7 +76,7 @@ void RealtimeGraph::AddDataPoint(float y, int channel) {
     
     // Move to next position (circular)
     //mWritePosition = (mWritePosition + 1) % mCapacity;
-    if (mWritePosition < mCapacity)
+    if (mWritePosition < mCapacity-1)
     {
         mWritePosition++;
     }
@@ -129,16 +132,23 @@ void RealtimeGraph::GenerateModel()
 
 void RealtimeGraph::DataBufferLeftShift(uint8_t n)
 {
-    for (int i = 0; i < n; i++)
+    if (n == 0 || mNumDataPoints == 0) return;
+
+    // If shifting more than we have, just clear the buffer region (no valid points)
+    if (n >= mNumDataPoints)
     {
-        for (int j = 0; j < mNumDataPoints-1; j++)
-        {
-            mData[j] = mData[j+1];
-        }
+        mNumDataPoints = 0;
+        return;
     }
 
+    std::memmove(&mData[0], &mData[n], (mNumDataPoints - n) * sizeof(DataPoint));
 
-    // Update the whole buffer
+    // TODO: Find a better way to do this every data point should not have to get its x value decremented every time we shift.
+    for (int i = 0; i < mNumDataPoints - n - 1; i++)
+    {
+        this->mData[i].x--;
+    }
+
     glBindBuffer(GL_ARRAY_BUFFER, mVbo);
-    glBufferSubData(GL_ARRAY_BUFFER, 0, sizeof(DataPoint) * mNumDataPoints,  &mData[0]);
+    glBufferSubData(GL_ARRAY_BUFFER, 0, (mNumDataPoints - n) * sizeof(DataPoint), &mData[0]);
 }
