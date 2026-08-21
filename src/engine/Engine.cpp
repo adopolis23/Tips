@@ -1,4 +1,5 @@
 #include "Engine.h"
+#include <cstdint>
 #include <glm/geometric.hpp>
 
 
@@ -34,8 +35,7 @@ float Engine::ReadSensorValue(int index)
 
                 distToTip = glm::distance(thisPosition, tipPosition);
                 sensorValue += CapacitySmoothingKernel(G_CapacitiveKernelSize, distToTip);
-;
-                //printf("Blade tip: %f, %f, %f\n", tip.x, tip.y, tip.z);
+
            }
        }
     }
@@ -45,21 +45,19 @@ float Engine::ReadSensorValue(int index)
 
 void Engine::Update()
 {
-    for (int sensorIndex = 0; sensorIndex < mCapactiveSensorPostions.size(); sensorIndex++)
+    for (size_t sensorIndex{0zu}; sensorIndex < mCapactiveSensorPostions.size(); sensorIndex++)
     {
+        if (this->mDataListeners.size() == 0)
+            break;
+
         float sensorValue = this->ReadSensorValue(sensorIndex);
-        //printf("Sensor value is: %f\n", sensorValue);
         
-        if (mDataCallback)
+        // Distribute the data to all listeners
+        DataPoint data{0, sensorValue, (uint8_t)sensorIndex};
+        for (DataCallbackFn fn : mDataListeners)
         {
-            mDataCallback(sensorValue, sensorIndex);
+            fn(data);
         }
-        else
-        {
-            printf("Engine-Warning: Data is being read but data callback not set!\n");
-        }
-        
-        break;
     }
 }
 
@@ -68,7 +66,7 @@ float Engine::CapacitySmoothingKernel(float radius, float dist)
     return radius * (1 / (dist * dist));
 }
 
-void Engine::SetDataCallback(std::function<void(float, uint8_t)> func)
+void Engine::AddDataListener(DataCallbackFn func)
 {
-    this->mDataCallback = func;
+    this->mDataListeners.push_back(func);
 }

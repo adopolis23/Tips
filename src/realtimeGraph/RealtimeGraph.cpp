@@ -1,4 +1,5 @@
 #include "RealtimeGraph.h"
+#include "Globals.h"
 #include <cstring> // for std::memmove
 #include <cstdio>
 
@@ -53,7 +54,7 @@ RealtimeGraph::RealtimeGraph(int x, int y, int w, int h, std::size_t capacity, C
 	GenerateModel();
 }
 
-void RealtimeGraph::AddDataPoint(float y, int channel) {
+void RealtimeGraph::AddDataPoint(DataPoint data) {
 
     //printf("Adding datapoint: %zu, %f, %d\n", this->mWritePosition, y, channel);
 
@@ -63,7 +64,8 @@ void RealtimeGraph::AddDataPoint(float y, int channel) {
         DataBufferLeftShift(1);
     }
 
-    this->mData[this->mWritePosition] = DataPoint{(float)this->mWritePosition, y, (uint8_t)channel};
+    //this->mData[this->mWritePosition] = DataPoint{(float)this->mWritePosition, y, (uint8_t)channel};
+    this->mData[this->mWritePosition] = DataPoint{(float)this->mWritePosition, data.y, data.channel};
     
     if (mNumDataPoints < mCapacity)
     {

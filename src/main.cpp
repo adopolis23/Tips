@@ -1,5 +1,6 @@
 #include <SDL2/SDL_video.h>
 #include <chrono>
+#include <memory>
 #include "window/Window.h"
 #include "scene/Scene.h"
 #include "scene/Camera.h"
@@ -40,16 +41,16 @@ int main(int argc, char** argv)
 
     bool running = true;
 
-    Window* window = new Window("Tips Blade Clearance Simulation", width, height, 0, SDL_WINDOWPOS_CENTERED); 
+    auto window = std::make_unique<Window>("Tips Blade Clearance Simulation", width, height, 0, SDL_WINDOWPOS_CENTERED); 
     Camera* camera = new Camera(width, height);
-    Renderer* renderer = new Renderer(camera);
+    auto renderer = std::make_unique<Renderer>(camera);
 
     Scene Simulation(10, 10, width/2 - 10, height/2 - 10);
 
     RealtimeGraph realtimeGraph(10, height/2 + 10, width - 20, height/2 - 20, 512, camera);
 
     Engine engine(&Simulation);
-    engine.SetDataCallback([&realtimeGraph](float value, int channel) { realtimeGraph.AddDataPoint(value, channel); });
+    engine.AddDataListener([&realtimeGraph](DataPoint data) { realtimeGraph.AddDataPoint(data); });
 
     InitializeSimulation(Simulation, engine);
 

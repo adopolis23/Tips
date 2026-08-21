@@ -12,6 +12,7 @@
 
 class Engine
 {
+    using DataCallbackFn = std::function<void(::DataPoint)>;
 
 public:
     Engine(Scene* scene);
@@ -24,7 +25,8 @@ public:
 
     float ReadSensorValue(int index);
 
-    void SetDataCallback(std::function<void(float, uint8_t)> func);
+    void AddDataListener(DataCallbackFn func);
+    
 
 private:
     std::vector<glm::vec3> mCapactiveSensorPostions;
@@ -34,5 +36,5 @@ private:
     Scene* mScene;
 
     // data callback will add a datapoint with the value (float) and the channel (int)
-    std::function<void(float, uint8_t)> mDataCallback;
+    std::vector<DataCallbackFn> mDataListeners;
 };

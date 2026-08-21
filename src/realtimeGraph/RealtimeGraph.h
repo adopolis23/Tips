@@ -16,7 +16,7 @@ class RealtimeGraph
 
 public:
     RealtimeGraph(int x, int y, int w, int h, std::size_t capacity, Camera* camera);
-    void AddDataPoint(float y, int channel);
+    void AddDataPoint(DataPoint data);
 
     GLuint GetVbo();
     GLuint GetVao();
