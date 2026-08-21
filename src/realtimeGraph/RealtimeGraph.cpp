@@ -36,7 +36,7 @@ RealtimeGraph::RealtimeGraph(int x, int y, int w, int h, std::size_t capacity, C
 
 
     // Initialize with zeros
-    for (std::size_t i = 0; i < mCapacity; i++)
+    for (std::size_t i{0zu}; i < mCapacity; i++)
     {
         mData[i] = DataPoint{static_cast<float>(i), 0.0f};
     }
@@ -84,36 +84,12 @@ void RealtimeGraph::AddDataPoint(DataPoint data) {
     }
 }
 
-GLuint RealtimeGraph::GetVbo()
-{
-    return this->mVbo;
-}
-
-GLuint RealtimeGraph::GetVao()
-{
-    return this->mVao;
-}
 
 std::size_t RealtimeGraph::GetCapacity()
 {
     return this->mCapacity;
 }
 
-
-Shader* RealtimeGraph::GetShader()
-{
-    return this->mDefaultShader;
-}
-
-SDL_Rect RealtimeGraph::GetViewport()
-{
-    return this->mViewport;
-}
-
-const glm::mat4& RealtimeGraph::GetModel()
-{
-    return this->mModel;
-}
 
 void RealtimeGraph::GenerateModel()
 {
@@ -146,7 +122,7 @@ void RealtimeGraph::DataBufferLeftShift(uint8_t n)
     std::memmove(&mData[0], &mData[n], (mNumDataPoints - n) * sizeof(DataPoint));
 
     // TODO: Find a better way to do this every data point should not have to get its x value decremented every time we shift.
-    for (int i = 0; i < mNumDataPoints - n - 1; i++)
+    for (size_t i{0zu}; i < mNumDataPoints - n - 1; i++)
     {
         this->mData[i].x--;
     }

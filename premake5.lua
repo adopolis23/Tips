@@ -5,7 +5,7 @@ workspace "TipsWorkspace"
 project "Tips"
     kind "ConsoleApp"
     language "C++"
-    cppdialect "C++17"
+    cppdialect "C++23"
 
     targetdir "bin/%{cfg.buildcfg}"
     objdir "bin-int/%{cfg.buildcfg}"

@@ -48,7 +48,7 @@ TARGET = $(TARGETDIR)/Tips
 OBJDIR = bin-int/Debug
 DEFINES += -DPATH=\"/home/bran406/dev/Tips/\" -DDEBUG
 ALL_CFLAGS += $(CFLAGS) $(ALL_CPPFLAGS) -m64 -g
-ALL_CXXFLAGS += $(CXXFLAGS) $(ALL_CPPFLAGS) -m64 -g -std=c++17
+ALL_CXXFLAGS += $(CXXFLAGS) $(ALL_CPPFLAGS) -m64 -g -std=c++23
 ALL_LDFLAGS += $(LDFLAGS) -LE:/dev/vcpkg/installed/x64-windows/lib -L/usr/lib64 -m64
 
 else ifeq ($(config),release)
@@ -57,7 +57,7 @@ TARGET = $(TARGETDIR)/Tips
 OBJDIR = bin-int/Release
 DEFINES += -DPATH=\"/home/bran406/dev/Tips/\" -DNDEBUG
 ALL_CFLAGS += $(CFLAGS) $(ALL_CPPFLAGS) -m64 -O2
-ALL_CXXFLAGS += $(CXXFLAGS) $(ALL_CPPFLAGS) -m64 -O2 -std=c++17
+ALL_CXXFLAGS += $(CXXFLAGS) $(ALL_CPPFLAGS) -m64 -O2 -std=c++23
 ALL_LDFLAGS += $(LDFLAGS) -LE:/dev/vcpkg/installed/x64-windows/lib -L/usr/lib64 -m64 -s
 
 endif
