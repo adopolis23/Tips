@@ -9,6 +9,7 @@
 #include "scene/Blade.h"
 #include "scene/Rotor.h"
 #include "Globals.h"
+#include "realtimeGraph/data/DataPipeline.h"
 
 class Engine
 {

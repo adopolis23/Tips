@@ -1,8 +1,8 @@
 #pragma once
 
 #include <vector>
+#include "Globals.h"
 
-template <typename T>
 class Transform
 {
 
@@ -10,12 +10,14 @@ class Transform
         Transform () {};
         virtual ~Transform () = default;
 
-        inline std::vector<T> GetData() const
+        inline std::vector<DataPoint> GetData() const
         {
             return mData;
         }
 
+        virtual std::vector<DataPoint> Apply(const std::vector<DataPoint>& data) = 0;
+
     private:
-        std::vector<T> mData;
+        std::vector<DataPoint> mData;
 
 };

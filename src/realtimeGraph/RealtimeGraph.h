@@ -10,6 +10,8 @@
 #include "RealtimeGraphRenderable.h"
 #include "Globals.h"
 #include <SDL2/SDL.h>
+#include "realtimeGraph/data/DataPipeline.h"
+
 
 
 class RealtimeGraph : public RealtimeGraphRenderable

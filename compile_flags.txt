@@ -3,3 +3,5 @@
 -I./external
 -Iinclude
 -Isrc
+-I./libs/glad/include/glad
+-I./libs

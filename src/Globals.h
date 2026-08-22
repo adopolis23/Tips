@@ -8,6 +8,7 @@
 
 extern float G_CapacitiveKernelSize;
 
+
 struct DataPoint
 {
     float x;
@@ -15,3 +16,4 @@ struct DataPoint
 
     uint8_t channel;
 };
+
