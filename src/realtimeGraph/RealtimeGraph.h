@@ -4,6 +4,7 @@
 #include <glad/glad.h>
 #include <cstdint>
 #include <cstdlib>
+#include <iterator>
 #include <vector>
 #include "shaders/Shader.h"
 #include "scene/Camera.h"
@@ -21,17 +22,16 @@ public:
     RealtimeGraph(int x, int y, int w, int h, std::size_t capacity, Camera* camera);
     void AddDataPoint(DataPoint data);
 
+    [[ nodiscard ]]
     std::size_t GetCapacity();
 
-    void GenerateModel();
+    void GenerateModel() override;
 
 private:
     void DataBufferLeftShift(uint8_t n);
 
-    std::size_t mNumDataPoints = 0;
-    std::size_t mCapacity;
-
-    std::vector<DataPoint> mData;
+    //std::vector<DataPoint> mData;
+    DataPipeline mDataPipeline;
 
 
     uint32_t mWritePosition;

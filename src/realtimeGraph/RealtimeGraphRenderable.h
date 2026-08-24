@@ -15,9 +15,13 @@ class RealtimeGraphRenderable
 
         inline Shader* GetShader() { return mDefaultShader; }
 
-        inline const glm::mat4& GetModel() { return mModel; }
+        // Generate model needs to be called every time here becuase as data gets added the model
+        // regens and moves the data into the bounds of the screen.
+        inline const glm::mat4& GetModel() { GenerateModel(); return mModel; }
 
         inline SDL_Rect GetViewport() { return mViewport; }
+
+        virtual void GenerateModel() = 0;
 
 
     protected:

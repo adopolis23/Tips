@@ -1,4 +1,5 @@
 #include "Engine.h"
+#include <cstddef>
 #include <cstdint>
 #include <glm/geometric.hpp>
 
@@ -43,6 +44,7 @@ float Engine::ReadSensorValue(int index)
     return sensorValue;
 }
 
+size_t iteration = 0;
 void Engine::Update()
 {
     for (size_t sensorIndex{0zu}; sensorIndex < mCapactiveSensorPostions.size(); sensorIndex++)
@@ -53,7 +55,7 @@ void Engine::Update()
         float sensorValue = this->ReadSensorValue(sensorIndex);
         
         // Distribute the data to all listeners
-        DataPoint data{0, sensorValue, (uint8_t)sensorIndex};
+        DataPoint data{(float)(iteration++), sensorValue, (uint8_t)sensorIndex};
         for (DataCallbackFn fn : mDataListeners)
         {
             fn(data);

@@ -75,6 +75,7 @@ OBJECTS :=
 GENERATED += $(OBJDIR)/Blade.o
 GENERATED += $(OBJDIR)/Camera.o
 GENERATED += $(OBJDIR)/Circle.o
+GENERATED += $(OBJDIR)/DataPipeline.o
 GENERATED += $(OBJDIR)/Engine.o
 GENERATED += $(OBJDIR)/Globals.o
 GENERATED += $(OBJDIR)/Object.o
@@ -97,6 +98,7 @@ GENERATED += $(OBJDIR)/main.o
 OBJECTS += $(OBJDIR)/Blade.o
 OBJECTS += $(OBJDIR)/Camera.o
 OBJECTS += $(OBJDIR)/Circle.o
+OBJECTS += $(OBJDIR)/DataPipeline.o
 OBJECTS += $(OBJDIR)/Engine.o
 OBJECTS += $(OBJDIR)/Globals.o
 OBJECTS += $(OBJDIR)/Object.o
@@ -216,6 +218,9 @@ $(OBJDIR)/main.o: src/main.cpp
 	@echo "$(notdir $<)"
 	$(SILENT) $(CXX) $(ALL_CXXFLAGS) $(FORCE_INCLUDE) -o "$@" -MF "$(@:%.o=%.d)" -c "$<"
 $(OBJDIR)/RealtimeGraph.o: src/realtimeGraph/RealtimeGraph.cpp
+	@echo "$(notdir $<)"
+	$(SILENT) $(CXX) $(ALL_CXXFLAGS) $(FORCE_INCLUDE) -o "$@" -MF "$(@:%.o=%.d)" -c "$<"
+$(OBJDIR)/DataPipeline.o: src/realtimeGraph/data/DataPipeline.cpp
 	@echo "$(notdir $<)"
 	$(SILENT) $(CXX) $(ALL_CXXFLAGS) $(FORCE_INCLUDE) -o "$@" -MF "$(@:%.o=%.d)" -c "$<"
 $(OBJDIR)/Renderer.o: src/renderer/Renderer.cpp
