@@ -27,6 +27,8 @@ public:
 
     void GenerateModel() override;
 
+    inline int GetStartingIndex() { return mDataPipeline[0].x; }
+
 private:
     void DataBufferLeftShift(uint8_t n);
 

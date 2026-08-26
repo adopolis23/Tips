@@ -47,7 +47,7 @@ int main(int argc, char** argv)
 
     Scene Simulation(10, 10, width/2 - 10, height/2 - 10);
 
-    RealtimeGraph realtimeGraph(10, height/2 + 10, width - 20, height/2 - 20, 32, camera);
+    RealtimeGraph realtimeGraph(10, height/2 + 10, width - 20, height/2 - 20, 512, camera);
 
     Engine engine(&Simulation);
     engine.AddDataListener([&realtimeGraph](DataPoint data) { realtimeGraph.AddDataPoint(data); });

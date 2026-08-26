@@ -55,7 +55,7 @@ void RealtimeGraph::AddDataPoint(DataPoint data) {
     
     // Update the buffer at this position
     glBindBuffer(GL_ARRAY_BUFFER, mVbo);
-    glBufferSubData(GL_ARRAY_BUFFER, mWritePosition * sizeof(DataPoint), sizeof(DataPoint),  &mDataPipeline.GetData()[mWritePosition]);
+    glBufferSubData(GL_ARRAY_BUFFER, 0, mDataPipeline.GetCapacity() * sizeof(DataPoint), mDataPipeline.GetData().data());
     
     // Move to next position (circular)
     //mWritePosition = (mWritePosition + 1) % mCapacity;
@@ -75,7 +75,7 @@ std::size_t RealtimeGraph::GetCapacity()
 void RealtimeGraph::GenerateModel()
 {
     float scaleX = static_cast<float>(mCamera->window_width) / 
-                   static_cast<float>(mDataPipeline.GetCapacity());
+                   static_cast<float>(mDataPipeline.GetCapacity()-1);
     
     this->mModel = glm::mat4(1.0f);
     

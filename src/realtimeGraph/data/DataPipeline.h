@@ -29,8 +29,12 @@ class DataPipeline
         }
 
         inline size_t GetCapacity() const { return mCapacity; }
+        inline size_t GetSize() const { return mData.size(); }
 
         std::vector<DataPoint> GetData() const;
+
+        // This method of getting ref to values in the pipeline is before any transform
+        DataPoint& operator[](const int index) { return mData[index]; }
 
     private:
         void DebugPrintBuffer();

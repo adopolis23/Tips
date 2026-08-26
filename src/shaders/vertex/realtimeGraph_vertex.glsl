@@ -5,7 +5,13 @@ uniform mat4 model;
 uniform mat4 view;
 uniform mat4 projection;
 
+uniform int startIndex;
+uniform int totalPoints;
+
+
 void main()
 {
-    gl_Position = projection * view * model * vec4(aPos.x, aPos.y, 0.0, 1.0);
+    float adjustedX = (gl_VertexID) % totalPoints;
+
+    gl_Position = projection * view * model * vec4(adjustedX, aPos.y, 0.0, 1.0);
 }
