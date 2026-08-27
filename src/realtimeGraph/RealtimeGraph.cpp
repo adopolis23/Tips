@@ -2,15 +2,13 @@
 #include "Globals.h"
 #include <cstring> // for std::memmove
 #include <cstdio>
+#include "transform/GainTransform.h"
+#include "transform/KernelTransforms.h"
 
 RealtimeGraph::RealtimeGraph(int x, int y, int w, int h, std::size_t capacity, Camera* camera)
     :mDataPipeline(capacity)
 {
 	this->mCamera = camera;
-
-    //this->mData.resize(capacity);
-
-    this->mWritePosition = 0;
 
     // Create VBO with dynamic draw hint
     glGenBuffers(1, &mVbo);
@@ -46,23 +44,20 @@ RealtimeGraph::RealtimeGraph(int x, int y, int w, int h, std::size_t capacity, C
     this->mViewport.h = h;
 
 	GenerateModel();
+
+
+    // Add members to the data pipeline
+    mDataPipeline.AddTransform<Gain>(200.0f);
+    mDataPipeline.AddTransform<VerticalTranslate>(0.0f);
 }
 
 void RealtimeGraph::AddDataPoint(DataPoint data) {
 
-    //this->mData[this->mWritePosition] = DataPoint{(float)this->mWritePosition, y, (uint8_t)channel};
     mDataPipeline.AddDataPoint(DataPoint{data.x, data.y, data.channel});
     
     // Update the buffer at this position
     glBindBuffer(GL_ARRAY_BUFFER, mVbo);
     glBufferSubData(GL_ARRAY_BUFFER, 0, mDataPipeline.GetCapacity() * sizeof(DataPoint), mDataPipeline.GetData().data());
-    
-    // Move to next position (circular)
-    //mWritePosition = (mWritePosition + 1) % mCapacity;
-    if (mWritePosition < mDataPipeline.GetCapacity()-1)
-    {
-        mWritePosition++;
-    }
 }
 
 
@@ -83,14 +78,8 @@ void RealtimeGraph::GenerateModel()
     this->mModel = glm::translate(this->mModel, 
                     glm::vec3(mCamera->left_window_bound, 0.0f, 0.0f));
     
-    constexpr float gain = 200.0f;
-
     // Scale to fit width (x goes from 0 to N-1 mapped to window width)
     this->mModel = glm::scale(this->mModel, 
-                    glm::vec3(scaleX, gain, 1.0f));
+                    glm::vec3(scaleX, 1.0f, 1.0f));
 }
 
-
-void RealtimeGraph::DataBufferLeftShift(uint8_t n)
-{
-}

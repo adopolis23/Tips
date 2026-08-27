@@ -30,13 +30,6 @@ public:
     inline int GetStartingIndex() { return mDataPipeline[0].x; }
 
 private:
-    void DataBufferLeftShift(uint8_t n);
-
-    //std::vector<DataPoint> mData;
     DataPipeline mDataPipeline;
-
-
-    uint32_t mWritePosition;
-
 
 };

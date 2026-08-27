@@ -36,10 +36,7 @@ void Rotor::Rotate(float angle)
 {
     for (auto& blade : m_blades)
     {
-        blade->RotateAroundPivot(glm::vec3{0.0, 0.7, 0.0}, glm::vec3(0, 0, angle));
-
-        //glm::vec3 tip = ((Blade*)blade)->GetBladeTip();
-        //printf("Blade tip: %f, %f, %f\n", tip.x, tip.y, tip.z);
+        blade->RotateAroundPivot(glm::vec3{0.0, 0.0, 0.0}, glm::vec3(0, 0, angle));
     }
 }
 
