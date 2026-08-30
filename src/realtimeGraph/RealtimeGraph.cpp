@@ -2,8 +2,9 @@
 #include "Globals.h"
 #include <cstring> // for std::memmove
 #include <cstdio>
-#include "transform/GainTransform.h"
+#include "transform/BasicTransforms.h"
 #include "transform/KernelTransforms.h"
+#include "transform/FourierTransform.h"
 
 RealtimeGraph::RealtimeGraph(int x, int y, int w, int h, std::size_t capacity, Camera* camera)
     :mDataPipeline(capacity)
@@ -48,7 +49,8 @@ RealtimeGraph::RealtimeGraph(int x, int y, int w, int h, std::size_t capacity, C
 
     // Add members to the data pipeline
     mDataPipeline.AddTransform<Gain>(200.0f);
-    mDataPipeline.AddTransform<VerticalTranslate>(0.0f);
+    mDataPipeline.AddTransform<FourierTransform>(1.0f);
+    mDataPipeline.AddTransform<VerticalTranslate>(-300.0f);
 }
 
 void RealtimeGraph::AddDataPoint(DataPoint data) {
