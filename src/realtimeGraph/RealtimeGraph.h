@@ -29,6 +29,12 @@ public:
 
     inline int GetStartingIndex() { return mDataPipeline[0].x; }
 
+    template <typename TransformType, typename... Args>
+    void AddTransform(Args&&... args)
+    {
+        mDataPipeline.AddTransform<TransformType>(std::forward<Args>(args)...);
+    }
+
 private:
     DataPipeline mDataPipeline;
 

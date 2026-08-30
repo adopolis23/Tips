@@ -48,9 +48,9 @@ RealtimeGraph::RealtimeGraph(int x, int y, int w, int h, std::size_t capacity, C
 
 
     // Add members to the data pipeline
-    mDataPipeline.AddTransform<Gain>(200.0f);
-    mDataPipeline.AddTransform<FourierTransform>(1.0f);
-    mDataPipeline.AddTransform<VerticalTranslate>(-300.0f);
+    //mDataPipeline.AddTransform<Gain>(200.0f);
+    //mDataPipeline.AddTransform<FourierTransform>();
+    //mDataPipeline.AddTransform<VerticalTranslate>(-200.0f);
 }
 
 void RealtimeGraph::AddDataPoint(DataPoint data) {
@@ -71,17 +71,10 @@ std::size_t RealtimeGraph::GetCapacity()
 
 void RealtimeGraph::GenerateModel()
 {
-    float scaleX = static_cast<float>(mCamera->window_width) / 
-                   static_cast<float>(mDataPipeline.GetCapacity()-1);
-    
     this->mModel = glm::mat4(1.0f);
     
     // Translate to left edge
     this->mModel = glm::translate(this->mModel, 
                     glm::vec3(mCamera->left_window_bound, 0.0f, 0.0f));
-    
-    // Scale to fit width (x goes from 0 to N-1 mapped to window width)
-    this->mModel = glm::scale(this->mModel, 
-                    glm::vec3(scaleX, 1.0f, 1.0f));
 }
 

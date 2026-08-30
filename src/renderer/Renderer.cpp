@@ -78,11 +78,12 @@ void Renderer::RenderRealtimeGraph(RealtimeGraph& rtg)
     shader->setMat4("view", view);
     shader->setMat4("projection", camera->projection);
 
-    int startingIndex = rtg.GetStartingIndex();
-    shader->setInt("startIndex", startingIndex);
-
     int totalPoints = rtg.GetCapacity();
     shader->setInt("totalPoints", totalPoints);
+
+    float xScale = static_cast<float>(camera->window_width) / static_cast<float>(totalPoints);
+
+    shader->setFloat("xScale", xScale);
 
     // Bind the graph VAO (attribute state is kept isolated in its own VAO)
     glBindVertexArray(rtg.GetVao());

@@ -29,7 +29,7 @@ private:
     Circle* m_shaft;
 
     // rotation speed of the rotor in radians per second
-    float mRotationSpeed = M_PI / 2; // 1 rotation every 4 second
+    float mRotationSpeed = M_PI / 2 * 2; // 1 rotation every 4 second
 
 
 };

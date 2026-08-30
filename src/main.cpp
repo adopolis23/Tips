@@ -1,5 +1,6 @@
 #include <SDL2/SDL_video.h>
 #include <chrono>
+#include <complex>
 #include <memory>
 #include "window/Window.h"
 #include "scene/Scene.h"
@@ -8,6 +9,9 @@
 #include "scene/Rotor.h"
 #include "renderer/Renderer.h"
 #include "realtimeGraph/RealtimeGraph.h"
+#include "realtimeGraph/transform/BasicTransforms.h"
+#include "realtimeGraph/transform/FourierTransform.h"
+#include "realtimeGraph/transform/KernelTransforms.h"
 
 #define SENSOR_Y_CORRECTION 30
 
@@ -48,9 +52,20 @@ int main(int argc, char** argv)
     Scene Simulation(10, 10, width/2 - 10, height/2 - 10);
 
     RealtimeGraph realtimeGraph(10, height/2 + 10, width - 20, height/2 - 20, 512, camera);
+    // Add transforms to the data pipeline
+    realtimeGraph.AddTransform<Gain>(350.0f);
+    realtimeGraph.AddTransform<VerticalTranslate>(-200.0f);
+
+    RealtimeGraph realtimeGraph2(width/2 + 10, 10, width/2 - 20, height/2 - 10, 512, camera);
+    // Add transforms to the data pipeline
+    realtimeGraph2.AddTransform<Gain>(8.0f);
+    //realtimeGraph2.AddTransform<SmoothingKernel>(5);
+    realtimeGraph2.AddTransform<FourierTransform>();
+    realtimeGraph2.AddTransform<VerticalTranslate>(-250.0f);
 
     Engine engine(&Simulation);
     engine.AddDataListener([&realtimeGraph](DataPoint data) { realtimeGraph.AddDataPoint(data); });
+    engine.AddDataListener([&realtimeGraph2](DataPoint data) { realtimeGraph2.AddDataPoint(data); });
 
     InitializeSimulation(Simulation, engine);
 
@@ -79,6 +94,7 @@ int main(int argc, char** argv)
 
         renderer->RenderScene(Simulation);
         renderer->RenderRealtimeGraph(realtimeGraph);
+        renderer->RenderRealtimeGraph(realtimeGraph2);
         
         window->SwapBuffers();
 

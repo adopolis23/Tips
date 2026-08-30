@@ -11,14 +11,15 @@ class FourierTransform : public Transform
 {
 
     public:
-        FourierTransform(float freq_step_size)
+        // The default freq step is 0.5 becuase the pos frequencies are 1/2the range of outputs
+        // therefor by having half step frequencies the output of this transform is the same size as the input
+        FourierTransform(float freq_step_size = 0.5f)
             :mFreqStepSize(freq_step_size)
         { }
 
         std::vector<DataPoint> Apply(const std::vector<DataPoint>& data)
         {
-            mFreqRange = static_cast<float>(data.size());
-            printf("Calculating Fourier Transform for frequencies %f - %f\n", 0.0f, mFreqRange);
+            mFreqRange = static_cast<float>(data.size()) / 2;
 
             // Result will hold the magnitude of the computer fourier transoform
             size_t total_output_points = static_cast<int>(std::ceil(mFreqRange / mFreqStepSize));
@@ -38,7 +39,8 @@ class FourierTransform : public Transform
                     double imag = sin(((2 * M_PI) / data.size()) * freq * sample);
                     std::complex<double> sample_contribution(real, -imag);
 
-                    sum += static_cast<double>(data[sample].y) * sample_contribution; 
+                    std::complex<double> signal(static_cast<double>(data[sample].y), 0.0f);
+                    sum += (signal * sample_contribution); 
                 }
 
                 float mag = abs(sum);
